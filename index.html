@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>3D Artist & Video Editor | SAHEJAD_SUMRA</title>
+
+<!-- FontAwesome Icons CDN (kept for other elements if needed) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #080808;
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    /* ---------- NAVBAR ---------- */
+
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 7%;
+        background: rgba(8,8,8,0.75);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+
+    .logo span {
+        color: #8b5cf6;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+    }
+
+    nav a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        color: #fff;
+    }
+
+    /* ---------- HERO ---------- */
+
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 100px 8% 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glow {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: #7c3aed;
+        filter: blur(180px);
+        opacity: 0.18;
+        border-radius: 50%;
+        right: -150px;
+        top: 100px;
+    }
+
+    .hero-content {
+        max-width: 850px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 8px 15px;
+        border: 1px solid #333;
+        border-radius: 30px;
+        color: #aaa;
+        font-size: 13px;
+        margin-bottom: 25px;
+    }
+
+    .hero h1 {
+        font-size: clamp(50px, 8vw, 100px);
+        line-height: 0.95;
+        letter-spacing: -5px;
+        margin-bottom: 30px;
+    }
+
+    .gradient {
+        background: linear-gradient(90deg, #fff, #a78bfa, #6366f1);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .hero p {
+        color: #999;
+        max-width: 650px;
+        line-height: 1.7;
+        font-size: 17px;
+        margin-bottom: 35px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 14px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-primary {
+        background: #fff;
+        color: #000;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        background: #ddd;
+    }
+
+    .btn-secondary {
+        border: 1px solid #333;
+        color: #fff;
+    }
+
+    .btn-secondary:hover {
+        background: #151515;
+    }
+
+    /* ---------- SECTIONS ---------- */
+
+    section {
+        padding: 100px 8%;
+    }
+
+    .section-title {
+        font-size: 45px;
+        margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+        color: #777;
+        margin-bottom: 45px;
+    }
+
+    /* ---------- SERVICES ---------- */
+
+    .services {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .service {
+        padding: 35px;
+        background: #101010;
+        border: 1px solid #202020;
+        border-radius: 15px;
+        transition: 0.4s;
+    }
+
+    .service:hover {
+        transform: translateY(-7px);
+        border-color: #555;
+    }
+
+    .service-number {
+        color: #8b5cf6;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .service h3 {
+        font-size: 25px;
+        margin-bottom: 12px;
+    }
+
+    .service p {
+        color: #888;
+        line-height: 1.6;
+    }
+
+    /* ---------- PROJECTS ---------- */
+
+    .projects {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .project {
+        background: #121214;
+        border: 1px solid #222;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.4s;
+    }
+
+    .project:hover {
+        transform: translateY(-7px);
+        border-color: #555;
+    }
+
+    .project-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .project-image-wrapper {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+    }
+
+    .project-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: 0.4s;
+    }
+
+    .project:hover .project-image-wrapper img {
+        transform: scale(1.05);
+    }
+
+    .project-content {
+        padding: 25px;
+    }
+
+    .project-tag {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #8b5cf6;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .project h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: #fff;
+    }
+
+    .project p {
+        color: #aaa;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* ---------- SOFTWARE ---------- */
+
+    .software {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .software-item {
+        padding: 18px 25px;
+        background: #101010;
+        border: 1px solid #252525;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .software-item:hover {
+        border-color: #8b5cf6;
+        transform: translateY(-3px);
+    }
+
+    .software-item strong {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+
+    .software-item img.software-logo {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+    }
+
+    .software-item span {
+        color: #777;
+        font-size: 13px;
+    }
+
+    /* ---------- ABOUT ---------- */
+
+    .about {
+        max-width: 800px;
+    }
+
+    .about p {
+        color: #999;
+        line-height: 1.8;
+        font-size: 17px;
+    }
+
+    /* ---------- CONTACT ---------- */
+
+    .contact {
+        text-align: center;
+        padding-bottom: 70px;
+    }
+
+    .contact h2 {
+        font-size: clamp(40px, 7vw, 75px);
+        margin-bottom: 20px;
+    }
+
+    .contact p {
+        color: #888;
+        margin-bottom: 30px;
+    }
+
+    .contact-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .email, .whatsapp-btn {
+        display: inline-block;
+        color: #fff;
+        font-size: 20px;
+        text-decoration: none;
+        border-bottom: 1px solid #555;
+        padding-bottom: 8px;
+        transition: 0.3s;
+    }
+
+    .whatsapp-btn:hover, .email:hover {
+        color: #8b5cf6;
+        border-color: #8b5cf6;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+        border-top: 1px solid #181818;
+        padding: 25px 8%;
+        color: #555;
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* ---------- ANIMATION ---------- */
+
+    .fade {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: 0.8s ease;
+    }
+
+    .fade.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media(max-width: 800px) {
+
+        nav ul {
+            display: none;
+        }
+
+        .hero {
+            padding-top: 120px;
+        }
+
+        .hero h1 {
+            letter-spacing: -3px;
+        }
+
+        .services,
+        .projects {
+            grid-template-columns: 1fr;
+        }
+
+        section {
+            padding: 70px 6%;
+        }
+
+        footer {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+    <div class="logo">Sahejad<span>Sumra.</span></div>
+
+    <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="glow"></div>
+
+    <div class="hero-content fade">
+
+        <div class="tag">
+            VIDEO EDITOR • 3D ARTIST
+        </div>
+
+        <h1>
+            Creating<br>
+            <span class="gradient">Visual Stories.</span>
+        </h1>
+
+        <p>
+            I'm a Video Editor and 3D Artist focused on creating
+            cinematic edits, 3D models, animations, environments,
+            and engaging visual experiences.
+        </p>
+
+        <div class="buttons">
+            <a href="#work" class="btn btn-primary">
+                View My Work
+            </a>
+
+            <a href="#contact" class="btn btn-secondary">
+                Contact Me
+            </a>
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- SERVICES -->
+
+<section>
+
+    <div class="fade">
+
+        <h2 class="section-title">What I Do</h2>
+
+        <p class="section-subtitle">
+            Creative services for digital content and 3D experiences.
+        </p>
+
+    </div>
+
+    <div class="services">
+
+        <div class="service fade">
+
+            <div class="service-number">01 — VIDEO</div>
+
+            <h3>Video Editing</h3>
+
+            <p>
+                Cinematic editing, reels, YouTube videos,
+                transitions, color grading, sound design,
+                motion graphics and storytelling.
+            </p>
+
+        </div>
+
+
+        <div class="service fade">
+
+            <div class="service-number">02 — 3D</div>
+
+            <h3>3D Art & Animation</h3>
+
+            <p>
+                3D modeling, texturing, lighting, animation,
+                environments, product visualization and
+                real-time 3D scenes.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+<section id="work">
+
+    <div class="fade">
+        <h2 class="section-title">Selected Work</h2>
+        <p class="section-subtitle">
+            A selection of my creative work.
+        </p>
+    </div>
+
+    <div class="projects">
+
+        <!-- Project 1: Cinematic Edit -->
+        <div class="project fade show">
+            <a href="https://drive.google.com/drive/folders/1zUoPVa0Y-q2nQeauvjfCR0l2RXPWwNgG?usp=drive_link" target="_blank" rel="noopener noreferrer" class="project-link">
+                <div class="project-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=1000&auto=format&fit=crop" alt="Cinematic Edit Preview">
+                </div>
+                <div class="project-content">
+                    <span class="project-tag">Video Editing</span>
+                    <h3>Cinematic Edit</h3>
+                    <p>Color grading, high-energy visual pacing, and immersive sound design.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Project 2: 3D Environment -->
+        <div class="project fade">
+            <a href="https://drive.google.com/drive/folders/1-S-seY210_sMQTcRrA6T3VI0mMNHTAys?usp=sharing" target="_blank" rel="noopener noreferrer" class="project-link">
+                <div class="project-image-wrapper">
+                    <img src="https://www.blendernation.com/wp-content/uploads/2022/06/BM_header-2048x1152.jpg" alt="3D Environment Preview">
+                </div>
+                <div class="project-content">
+                    <span class="project-tag">Environment Art</span>
+                    <h3>3D Environment</h3>
+                    <p>Blender and Unreal Engine asset texturing, lighting, and world building.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Project 3: 3D Animation -->
+        <div class="project fade">
+            <a href="https://drive.google.com/drive/folders/14nPEHz3R5Pmrt3-_rTA9pY9InXoElziY?usp=drive_link" target="_blank" rel="noopener noreferrer" class="project-link">
+                <div class="project-image-wrapper">
+                    <img src="https://www.blendernation.com/wp-content/uploads/2014/02/add-camera-rig-add-on.png" alt="3D Animation Preview">
+                </div>
+                <div class="project-content">
+                    <span class="project-tag">3D Animation</span>
+                    <h3>Character & Motion</h3>
+                    <p>Rigging, hard-surface modeling, and dynamic rendering workflows.</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SOFTWARE -->
+
+<section id="skills">
+
+    <div class="fade">
+
+        <h2 class="section-title">Software</h2>
+
+        <p class="section-subtitle">
+            Tools I use to bring ideas to life.
+        </p>
+
+    </div>
+
+
+    <div class="software">
+
+        <div class="software-item fade">
+            <strong>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/DaVinci_Resolve_17_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="DaVinci Resolve" class="software-logo">
+                DaVinci Resolve
+            </strong>
+            <span>Video Editing & Color</span>
+        </div>
+
+        <div class="software-item fade">
+            <strong>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Capcut-icon.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="CapCut" class="software-logo">
+                CapCut
+            </strong>
+            <span>Video Editing & Social Content</span>
+        </div>
+
+        <div class="software-item fade">
+            <strong>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" alt="Blender" class="software-logo">
+                Blender
+            </strong>
+            <span>3D Modeling & Animation</span>
+        </div>
+
+        <div class="software-item fade">
+            <strong>
+                <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/unreal-engine-dark.svg" alt="Unreal Engine" class="software-logo">
+                Unreal Engine
+            </strong>
+            <span>Real-Time 3D & Environments</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="about fade">
+
+        <h2 class="section-title">
+            About Me
+        </h2>
+
+        <p>
+            I combine video editing and 3D artistry to create
+            visually engaging content. From editing footage and
+            designing cinematic sequences to building 3D assets
+            and environments, I enjoy turning creative ideas into
+            finished visual experiences.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="contact">
+
+    <div class="fade">
+
+        <h2>Let's Create.</h2>
+
+        <p>
+            Have a project, video, animation or 3D idea?
+        </p>
+
+        <div class="contact-links">
+            <a class="email" href="mailto:sumrasejad08@gmail.com">
+                sumrasejad08@gmail.com
+            </a>
+            
+            <a class="whatsapp-btn" href="https://wa.me/919913052910" target="_blank" rel="noopener noreferrer">
+                WhatsApp Me
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <span>
+        © <span id="year"></span> Sahejad Sumra
+    </span>
+
+    <span>
+        Video Editor • 3D Artist
+    </span>
+
+</footer>
+
+
+<script>
+
+    // Current year
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+
+    // Scroll reveal animation
+
+    const elements =
+        document.querySelectorAll(".fade");
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("show");
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+
+    elements.forEach(element => {
+        observer.observe(element);
+    });
+
+</script>
+
+</body>
+</html>
